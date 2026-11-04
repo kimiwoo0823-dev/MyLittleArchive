@@ -11,16 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SignUpService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void execute(SignUpRequest signUpRequest) {
 
         User user = User.builder()
-                .loginId(signUpRequest.getLoginId())
-                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .loginId(signUpRequest.loginId())
+                .password(passwordEncoder.encode(signUpRequest.password()))
                 .build();
+
         userRepository.save(user);
     }
 }
